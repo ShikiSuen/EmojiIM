@@ -8,8 +8,9 @@ import CoreFoundation
 import Foundation
 import LibEmojiIMSharedImpl
 
-public class PreferencesDelegate: @unchecked Sendable {
-  public init() {}
+@objc(PreferencesDelegate)
+public class PreferencesDelegate: NSObject, @unchecked Sendable {
+  override public init() {}
   private let store = SettingStore()
   private lazy var keyboardLayouts: [TISInputSource]? = TISInputSource.keyboardLayouts()?.filter { $0.scriptCode == 0 }
 
