@@ -1,25 +1,75 @@
-# :sushi: EmojiIM: Emoji Input Method for macOS
+# EmojiIM: Emoji Input Method for macOS
 
-[![Build Status](https://www.bitrise.io/app/0741e1b8cd1b5086/status.svg?token=79CGJwB83qmYoe5XcqqJbw)](https://www.bitrise.io/app/0741e1b8cd1b5086)
+[![Swift 6](https://img.shields.io/badge/Swift-6.0-orange)](https://swift.org)
+[![macOS 15+](https://img.shields.io/badge/macOS-15%2B-blue)](https://developer.apple.com/macos/)
+[![License MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-EmojiIM converts github style emoji code to emoji.
+EmojiIM converts GitHub-style emoji codes (`:sushi:`) into emoji characters (🍣)
+as you type.  It is a macOS input method built on InputMethodKit.
 
-![](/docs/sushi.gif)
+![sushi](docs/sushi.gif)
 
-## :circus_tent: Project goal: Playground for input method
-This project goal is not only to prodive emoji input methods, but also to investigate inside of input method. To achive this, some advanced features(e.g. touchbar supports) are implemented and described details at [label:article](https://github.com/mzp/EmojiIM/pulls?utf8=✓&q=label%3Aarticle%20).
+## Project Goals
 
-## :star: Dowwnload/Install
-:construction:
+- Provide a fast, lightweight emoji input method for macOS.
+- Serve as a playground for investigating InputMethodKit internals.
+- Maintain a clean, modern Swift 6 codebase with zero legacy dependencies.
 
-## :wrench: Build
+## Architecture
 
 ```
-bundle install
-bundle exec fastlane try
+NSEvent  →  EmojiIMSessionController.handle()
+            →  Automaton (state machine)
+              →  Mapping (transition rules)
+                →  EmojiDictionary (JSON lookup)
+                  →  Combine publishers
+                    →  IMKCandidates
 ```
 
-After logout/login, EmojiIM appears at input sources of keyboard preferences.
+| Module               | Role                                        |
+|----------------------|---------------------------------------------|
+| `LibEmojiIM`         | Input method core: automaton, dictionary, IMK controller |
+| `LibEmojiIMPreferences` | Preferences pane delegate                |
+| `LibEmojiIMSharedImpl`  | Shared utilities: BuildInfo, SettingStore, TISInputSource, logging |
+
+### Key Design Decisions
+
+- **Combine-based automaton** instead of ReactiveSwift.
+- **`@MainActor` isolation** on all UI-facing code via SPM `defaultIsolation(MainActor.self)`.
+- **Swift Testing** for all unit tests (no XCTest).
+- **Swift 6 strict concurrency** with `swiftLanguageModes: [.v6]`.
+- **IMKSwift** for modernized InputMethodKit bridging with `@MainActor` annotations.
+
+## Build
+
+```sh
+cd Packages/LibEmojiIM
+swift build
+```
+
+### Run Tests
+
+```sh
+cd Packages/LibEmojiIM
+swift test
+```
+
+### Build & Install the App
+
+Open `EmojiIM.xcworkspace` in Xcode, select the **EmojiIM** scheme, and build.
+After a logout/login cycle, EmojiIM appears in System Settings → Keyboard → Input Sources.
+
+## Requirements
+
+- macOS 15 (Sequoia) or later
+- Xcode 26 or later (Swift 6.2)
+- [IMKSwift](https://github.com/vChewing/IMKSwift) (resolved automatically via SPM)
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+---
 
 ## :smile: Commit symbol
 
@@ -55,5 +105,4 @@ After logout/login, EmojiIM appears at input sources of keyboard preferences.
 |:police_car:|improve code format drived by lint police|
 |:lock:      |improve something related with signing   |
 
-## :copyright: LICENSE
-MIT
+$ EOF.

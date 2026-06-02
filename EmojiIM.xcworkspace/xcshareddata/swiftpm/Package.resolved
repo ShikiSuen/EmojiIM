@@ -1,0 +1,15 @@
+{
+  "originHash" : "eec6315be12484451cca4df9b6db75a8354805883921c01df1f42f504122d914",
+  "pins" : [
+    {
+      "identity" : "imkswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vChewing/IMKSwift.git",
+      "state" : {
+        "revision" : "1f94fd558301a912a8b07b046cadb0586f508f23",
+        "version" : "26.6.2"
+      }
+    }
+  ],
+  "version" : 3
+}

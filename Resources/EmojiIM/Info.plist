@@ -23,7 +23,7 @@
 	<key>InputMethodConnectionName</key>
 	<string>jp.mzp.inputmethod.EmojiIM_Connection</string>
 	<key>InputMethodServerControllerClass</key>
-	<string>EmojiInputController</string>
+	<string>EmojiIMSessionController</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
@@ -97,5 +97,9 @@
 	</dict>
 	<key>TISIntendedLanguage</key>
 	<string>en</string>
+	<key>TICapsLockLanguageSwitchCapable</key>
+	<true/>
+	<key>TISIconIsTemplate</key>
+	<true/>
 </dict>
 </plist>

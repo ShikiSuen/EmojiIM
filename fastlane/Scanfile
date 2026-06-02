@@ -1,4 +1,0 @@
-workspace 'EmojiIM.xcworkspace'
-scheme 'EmojiIM'
-configuration 'Release'
-output_directory 'Reports'
