@@ -10,11 +10,15 @@ import LibEmojiIMSharedImpl
 
 @objc(PreferencesDelegate)
 public class PreferencesDelegate: NSObject, @unchecked Sendable {
-  override public init() {}
+  override public init() {
+    Process.consoleLog("[EmojiIM][Preferences] PreferencesDelegate initialized.")
+  }
+
   private let store = SettingStore()
   private lazy var keyboardLayouts: [TISInputSource]? = TISInputSource.keyboardLayouts()?.filter { $0.scriptCode == 0 }
 
   public func loadMainViewThroughMainActor(against mainView: NSView) {
+    Process.consoleLog("[EmojiIM][Preferences] loadMainViewThroughMainActor called, starting execution.")
     let keyboardLabel = NSTextField().with {
       $0.stringValue = "Keyboard:"
       $0.drawsBackground = false
